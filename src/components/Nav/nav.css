@@ -1,0 +1,72 @@
+.nav-container {
+    height: 8vh;
+    /* width: 100vw; */
+    /* border: 1px solid blue; */
+    background: #232323;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-container > h1 {
+    color: white;
+    font-size: 2em;
+    margin-left: 2%;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* flex-direction: row-reverse; */
+    width: 30vw;
+    /* border: 1px solid red; */
+}
+
+.nav-links > a {
+    /* color: #5bba94;
+    font-size: 1.6em;
+    text-decoration: none; */
+
+    background: #5bba94;
+    width: 80px;
+    padding: 1%;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 1.2em;
+    text-decoration: none;
+    color: black;
+    margin-right: 4%;
+}
+
+.nav-links > a:hover {
+    /* cursor: pointer;
+    color: #91ccba; */
+
+    cursor: pointer;
+    background: #60c59d; /*60c59d*/
+}
+
+.nav-links > button {
+    /* color: black; */
+    background: none;
+    color: #3ea6ff;
+    /* font-weight: bold; */
+    width: 80px;
+    padding: 1%;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 1.2em;
+    border: none;
+    margin-right: 4%;
+}
+
+.nav-links > button:hover {
+    cursor: pointer;
+    /* background: #60c59d; 60c59d */
+}
+
+.nav-links > button:focus {
+    outline: none;
+}
