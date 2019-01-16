@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
-import { toggleRegister, toggleRecover } from '../../ducks/loginReducer';
+import { toggleModal, toggleRegister, toggleRecover, updateUsername, updatePassword, updateErrorMessage } from '../../ducks/loginReducer';
+import { updateUser } from '../../ducks/userReducer';
 
 import Register from '../Register/Register';
 import RecoverAccount from '../Recover/RecoverAccount';
@@ -9,9 +11,28 @@ import RecoverAccount from '../Recover/RecoverAccount';
 
 class Login extends Component {
 
-    toggleRegister = () => this.props.toggleRegister(!this.props.register);
+    // onChange handling
+    updateUsername = e => this.props.updateUsername(e.target.value);
+    updatePassword = e => this.props.updatePassword(e.target.value);
 
+    // modal handling
+    toggleRegister = () => this.props.toggleRegister(!this.props.register);
     toggleRecover = () => this.props.toggleRecover(!this.props.recover);
+
+    // logging in
+    login = e => {
+        // prevent the form from refreshing the page
+        e.preventDefault();
+
+        const { username, password } = this.props;
+        console.log("username:", username)
+        axios.post("/auth/login", { username, password })
+        .then(res => {
+            this.props.updateUser(res.data);
+            this.props.toggleModal(false);
+        })
+        .catch(err => this.props.updateErrorMessage(err.response.data));
+    }
 
     render() {
 
@@ -29,9 +50,12 @@ class Login extends Component {
         return (
             <div className="modal-form-container">
                 <h1>Login to Your Account</h1>
-                <form className="modal-form">
-                    <input type="text" placeholder="Username" maxLength="12" required />
-                    <input type="password" placeholder="Password" minLength="10" maxLength="20" required />
+                {
+                        this.props.errorMessage && <h5 className="modal-form-error">{ this.props.errorMessage }</h5>
+                }
+                <form className="modal-form" onSubmit={this.login}>
+                    <input type="text" placeholder="Username" maxLength="12" onChange={this.updateUsername} value={this.props.username} required />
+                    <input type="password" placeholder="Password" minLength="10" maxLength="20" onChange={this.updatePassword} value={this.props.password} required />
                     <input type="submit" value="Login" />
 
                     <div className="modal-form-help">
@@ -45,9 +69,12 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
+        username: state.loginReducer.username,
+        password: state.loginReducer.password,
+        errorMessage: state.loginReducer.errorMessage,
         register: state.loginReducer.register,
         recover: state.loginReducer.recover
     }
 }
 
-export default connect(mapStateToProps, { toggleRegister, toggleRecover }) (Login);
+export default connect(mapStateToProps, { toggleModal, toggleRegister, toggleRecover, updateUsername, updatePassword, updateErrorMessage ,updateUser }) (Login);

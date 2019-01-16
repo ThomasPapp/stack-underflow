@@ -19,6 +19,12 @@
     align-items: center;
 }
 
+.modal-form-error {
+    color: red;
+    margin: 0;
+    margin-bottom: 2%;
+}
+
 .modal-form > label, .modal-form-large > label {
     font-size: 1.2em;
     margin: 2%;

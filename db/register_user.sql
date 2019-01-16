@@ -1,3 +1,5 @@
-insert into user 
+insert into users
 (username, email, password, rank, reputation)
-($1, $2, $3, 0, 0);
+values
+($1, $2, $3, 0, 0)
+returning *;
