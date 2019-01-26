@@ -5,6 +5,7 @@ const TOGGLE_RECOVER_ACCOUNT = "TOGGLE_RECOVER_ACCOUNT";
 const UPDATE_USERNAME = "UPDATE_USERNAME";
 const UPDATE_PASSWORD = "UPDATE_PASSWORD";
 const UPDATE_ERROR_MESSAGE = "UPDATE_ERROR_MESSAGE";
+const UPDATE_LOADING = "UPDATE_LOADING";
 
 // initial state
 const initalState = {
@@ -15,6 +16,9 @@ const initalState = {
     // inputs
     username: '',
     password: '',
+
+    // loading/waiting for response
+    loading: false,
 
     // error message
     errorMessage: ''
@@ -79,6 +83,13 @@ export function updateErrorMessage(errorMessage) {
     }
 }
 
+export function updateLoading(loading) {
+    return {
+        type: UPDATE_LOADING,
+        payload: loading
+    }
+}
+
 // reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
@@ -90,18 +101,21 @@ export default function reducer(state = initalState, action) {
                 recover: false,
                 username: '',
                 password: '',
+                loading: false,
                 errorMessage: ''
             }
         case TOGGLE_REGISTER:
             return {
                 ...state,
                 recover: false,
+                loading: false,
                 register: action.payload
             }
         case TOGGLE_RECOVER_ACCOUNT:
             return {
                 ...state,
                 register: false,
+                loading: false,
                 recover: action.payload
             }
         case UPDATE_USERNAME:
@@ -118,6 +132,11 @@ export default function reducer(state = initalState, action) {
             return {
                 ...state,
                 errorMessage: action.payload
+            }
+        case UPDATE_LOADING:
+            return {
+                ...state,
+                loading: action.payload
             }
     }
 

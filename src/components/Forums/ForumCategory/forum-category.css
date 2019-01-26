@@ -1,0 +1,45 @@
+.forum-category-container {
+    width: 70vw;
+    /* height: 50vh; */
+    border-radius: 4px;
+    background: #2D2D2D;
+    margin-left: 2%;
+    margin-top: 2%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.forum-category-container > hr {
+    width: 69vw;
+    border-radius: 4px;
+    margin-bottom: 2%;
+}
+
+.forum-category {
+    height: 5vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.forum-category-info {
+    height: 8vh;
+    width: 40vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.forum-category > h3 {
+    color: white;
+    margin-left: 2%;
+}
+
+.forum-category-info > h3 {
+    color: white;
+    margin-right: 4%;
+    margin-left: 15%;
+}

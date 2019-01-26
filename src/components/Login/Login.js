@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { toggleModal, toggleRegister, toggleRecover, updateUsername, updatePassword, updateErrorMessage } from '../../ducks/loginReducer';
+import { toggleModal, toggleRegister, toggleRecover, updateUsername, updatePassword, updateLoading, updateErrorMessage } from '../../ducks/loginReducer';
 import { updateUser } from '../../ducks/userReducer';
 
 import Register from '../Register/Register';
 import RecoverAccount from '../Recover/RecoverAccount';
+import Loading from '../Loading/Loading';
 
 // import './login.css';
 
@@ -24,6 +25,8 @@ class Login extends Component {
         // prevent the form from refreshing the page
         e.preventDefault();
 
+        this.props.updateLoading(true);
+
         const { username, password } = this.props;
         console.log("username:", username)
         axios.post("/auth/login", { username, password })
@@ -31,7 +34,10 @@ class Login extends Component {
             this.props.updateUser(res.data);
             this.props.toggleModal(false);
         })
-        .catch(err => this.props.updateErrorMessage(err.response.data));
+        .catch(err => {
+            this.props.updateLoading(false);
+            this.props.updateErrorMessage(err.response.data)
+        });
     }
 
     render() {
@@ -46,10 +52,17 @@ class Login extends Component {
             return <RecoverAccount />;
         }
 
+        if (this.props.loading) {
+            console.log("loading bitch")
+        }
+
         // render the login component
         return (
             <div className="modal-form-container">
                 <h1>Login to Your Account</h1>
+                {
+                    this.props.loading && <Loading />
+                }
                 {
                         this.props.errorMessage && <h5 className="modal-form-error">{ this.props.errorMessage }</h5>
                 }
@@ -73,8 +86,9 @@ const mapStateToProps = state => {
         password: state.loginReducer.password,
         errorMessage: state.loginReducer.errorMessage,
         register: state.loginReducer.register,
-        recover: state.loginReducer.recover
+        recover: state.loginReducer.recover,
+        loading: state.loginReducer.loading
     }
 }
 
-export default connect(mapStateToProps, { toggleModal, toggleRegister, toggleRecover, updateUsername, updatePassword, updateErrorMessage ,updateUser }) (Login);
+export default connect(mapStateToProps, { toggleModal, toggleRegister, toggleRecover, updateUsername, updatePassword, updateLoading, updateErrorMessage, updateUser }) (Login);

@@ -3,7 +3,6 @@ const express = require('express');
 const session = require('express-session');
 const { json } = require('body-parser');
 const massive = require('massive');
-const cors = require('cors');
 const app = express();
 
 const PORT = process.env.SERVER_PORT || 3001;
@@ -13,11 +12,11 @@ const auth = require('./middleware/authMiddleware');
 
 // controllers
 const authController = require('./controllers/auth/authController');
+const forumController = require('./controllers/fourm/fourmController');
 
 // mail controller
 const mailController = require('./controllers/auth/emailController');
 
-app.use(cors());
 app.use(json());
 
 // init session
@@ -41,6 +40,13 @@ app.post('/auth/login', auth.isLoggedOut, authController.login);
 app.get('/auth/logout', auth.isLoggedIn, authController.logout);
 
 app.get('/auth/email', mailController.sendMail);
+
+// forum end points
+app.get('/api/forum/categorys', forumController.getCategorys);
+app.get('/api/forum/threads/:id', forumController.getThreads);
+app.post('/api/forum/threads', auth.isLoggedIn, forumController.postThread);
+app.get('/api/forum/thread/:id', forumController.getThread);
+app.delete('/api/forum/thread/:id', auth.isLoggedIn, forumController.deleteThread);
 
 // open the connecton
 app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));

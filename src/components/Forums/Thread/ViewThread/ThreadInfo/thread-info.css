@@ -1,0 +1,19 @@
+.thread-info-container {
+    width: 98%;
+    height: 10%;
+    margin-left: 1%;
+    border-bottom: 1px solid #494848;
+
+    /* border: 1px solid red; */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+}
+
+.thread-info-date {
+    position: absolute;
+    right: 2%;
+}

@@ -16,7 +16,8 @@ class Nav extends Component {
     render() {
         return (
             <nav className="nav-container">
-                <h1>Stack Underflow</h1>
+            {/* <h1>Stack Underflow</h1> */}
+                <Link to="/" className="nav-logo"><h1>Stack Underflow</h1></Link>
                 <div className="nav-links">
                     {/* <Link to='/forums'>Forums</Link> */}
                     {

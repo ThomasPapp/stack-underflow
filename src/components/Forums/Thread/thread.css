@@ -1,0 +1,10 @@
+.thread-container {
+    /* border: 1px solid red; */
+    width: 90vw;
+
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

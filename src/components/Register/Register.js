@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { toggleModal, toggleRegister, toggleRecover } from '../../ducks/loginReducer';
+import { toggleModal, toggleRegister, toggleRecover, updateLoading } from '../../ducks/loginReducer';
 import { updateUser } from '../../ducks/userReducer';
 
-import './register.css';
+import Loading from '../Loading/Loading';
 
 class Register extends Component {
 
@@ -32,10 +32,13 @@ class Register extends Component {
         // prevents the page from refreshing when submitting the form
         e.preventDefault();
 
+        this.props.updateLoading(true);
+
         const { username, email, password, passwordConfirm } = this.state;
 
         axios.post('/auth/register', { username, email, password, passwordConfirm })
         .then(res => {
+            this.props.updateLoading(false);
             this.setState({
                 username: '',
                 email: '',
@@ -55,6 +58,9 @@ class Register extends Component {
         return (
             <div className="modal-form-container">
                 <h1>Register an Account</h1>
+                    {
+                        this.props.loading && <Loading />
+                    }
                     {
                         this.state.errorMessage && <h5 className="modal-form-error">{ this.state.errorMessage }</h5>
                     }
@@ -78,8 +84,9 @@ class Register extends Component {
 const mapStateToProps = state => {
     return {
         register: state.loginReducer.register,
-        recover: state.loginReducer.recover
+        recover: state.loginReducer.recover,
+        loading: state.loginReducer.loading
     }
 }
 
-export default connect(mapStateToProps, { toggleModal, toggleRegister, toggleRecover, updateUser }) (Register);
+export default connect(mapStateToProps, { toggleModal, toggleRegister, toggleRecover, updateUser, updateLoading }) (Register);

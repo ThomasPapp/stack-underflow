@@ -9,10 +9,14 @@
     justify-content: space-between;
 }
 
-.nav-container > h1 {
+.nav-logo {
+    text-decoration: none;
     color: white;
-    font-size: 2em;
     margin-left: 2%;
+}
+
+.nav-logo > h1 {
+    font-size: 2em;
 }
 
 .nav-links {

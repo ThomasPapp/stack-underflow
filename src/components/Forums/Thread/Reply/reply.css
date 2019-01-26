@@ -1,0 +1,6 @@
+.reply {
+    width: 100%;
+    min-height: 30vh;
+
+    border: 1px solid red;
+}
