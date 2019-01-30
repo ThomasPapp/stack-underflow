@@ -38,7 +38,14 @@ async function getThread(req, res) {
     const db = req.app.get('db');
     const id = req.params.id;
     try {
+        // the main thread post
         const results = await db.get_thread([ id ]);
+        // the thread replies
+        const replies = await db.get_posts([ id ]);
+
+        // add the replies to the thread results
+        results[0].replies = replies;
+
         res.status(200).json(results);
     } catch (e) {
         console.log(`Error while fetching thread with id of ${id}`, e);
@@ -78,10 +85,23 @@ async function likeThread(req, res) {
     }
 }
 
+async function postReply(req, res) {
+    const db = req.app.get('db');
+    const { user_id, formattedDate, thread, content } = req.body;
+    try {
+        const results = await db.post_reply([ user_id, formattedDate, thread, content ]);
+        const reply = await db.get_reply([ results[0].post_id ]);
+        res.status(201).json(reply);
+    } catch (e) {
+        console.log("Error while posting reply", e);
+    }
+}
+
 module.exports = {
     getCategorys,
     getThreads,
     postThread,
     getThread,
-    deleteThread
+    deleteThread,
+    postReply
 }

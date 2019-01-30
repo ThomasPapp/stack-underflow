@@ -1,4 +1,4 @@
-const body = (username, auth) => `
+const bodyy = (username, auth) => `
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -75,6 +75,25 @@ const body = (username, auth) => `
     </main>
 </body>
 </html>
+`;
+
+const body = (username, auth) => `
+    <div>
+        <center>
+            <h4>Welcome to Stack Underflow, ${username}!</h4>
+            </br>
+            </br>
+            <p>
+                We've finished setting up your account, however before
+                you can get started we ask that you please verify your
+                email address. Simply click the link below to get started!
+            </p>
+            </br>
+            </br>
+
+            <a href="http://localhost:3000/verify?auth=${auth}" class="auth-button" style="text-align: center;text-decoration: none;border-radius: 4px;color: white;background: #4d90fe;border: none;padding: 8px;width: 300px;height: 100px;font-size: 1.2em;">Verify Account</a>
+        </center>
+    </div>
 `;
 
 module.exports = {

@@ -1,0 +1,22 @@
+.post-container {
+    background: #2D2D2D;
+    border-radius: 4px;
+    width: 90vw;
+    min-height: 50vh;
+    position: relative;
+
+    margin: 2% auto;
+
+    color: #AAAAAA;
+
+    display: flex;
+}
+
+.post-body {
+    width: 80%;
+    height: 100%;
+    margin-left: 20%;
+
+    display: flex;
+    flex-direction: column;
+}

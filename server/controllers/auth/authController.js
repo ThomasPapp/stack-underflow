@@ -15,6 +15,36 @@ function logout(req, res) {
     res.sendStatus(200);
 }
 
+async function changePass(req, res) {
+    const db = req.app.get('db');
+
+    const { current, newPass } = req.body;
+    try {
+        const results = await db.get_user([ req.session.user.username.toLowerCase() ]);
+        if (!results[0]) {
+            return res.status(404).send("Accout not found");
+        }
+
+        const user = results[0];
+
+        const correctPassword = await bcrypt.compare(current, user.password);
+
+        // the current password does not match
+        if (!correctPassword) {
+            return res.status(401).send("Incorrect password");
+        }
+
+        // hash the new password
+        const hashedPassword = await bcrypt.hash(newPass, 12);
+
+        await db.update_password([ hashedPassword, req.session.user.userId ]);
+
+        res.sendStatus(200);
+    } catch (e) {
+        console.log("Error while updating password!", e);
+    }
+}
+
 async function login(req, res) {
     const db = req.app.get('db');
     
@@ -131,8 +161,36 @@ async function register(req, res) {
     }
 }
 
+async function sendEmail(req, res) {
+    const auth = `123dFERT@#$gasdfgq34t`;
+    const body = mail.body("Thomas", auth);
+    const email = "pappmthomas@gmail.com";
+    const options = {
+        from: `Stack Underflow <${process.env.SERVER_EMAIL}>`,
+        to: email,
+        subject: 'Stack Underflow Verification',
+        html: body
+    }
+
+    try {
+        await transporter.sendMail(options);
+
+        res.sendStatus(200);
+    } catch (e) {
+        console.log('Error while sending verification email', e);
+        return;
+    }
+}
+
+function getUser(req, res) {
+    res.status(200).json(req.session.user);
+}
+
 module.exports = {
     register,
     login,
-    logout
+    logout,
+    getUser,
+    sendEmail,
+    changePass
 }

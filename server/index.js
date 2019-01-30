@@ -38,6 +38,9 @@ massive(process.env.CONNECTION_STRING)
 app.post('/auth/register', auth.isLoggedOut, authController.register);
 app.post('/auth/login', auth.isLoggedOut, authController.login);
 app.get('/auth/logout', auth.isLoggedIn, authController.logout);
+app.get('/auth/user', authController.getUser);
+app.put('/auth/change-pass', auth.isLoggedIn, authController.changePass);
+app.get('/auth/mail', authController.sendEmail);
 
 app.get('/auth/email', mailController.sendMail);
 
@@ -47,6 +50,7 @@ app.get('/api/forum/threads/:id', forumController.getThreads);
 app.post('/api/forum/threads', auth.isLoggedIn, forumController.postThread);
 app.get('/api/forum/thread/:id', forumController.getThread);
 app.delete('/api/forum/thread/:id', auth.isLoggedIn, forumController.deleteThread);
+app.post('/api/forum/thread/reply', auth.isLoggedIn, forumController.postReply);
 
 // open the connecton
 app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));

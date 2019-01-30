@@ -75,7 +75,7 @@ class ViewThread extends Component {
 
                     <ThreadContent 
                         editorState={editorState}
-                    />
+                    /> 
 
                     <ThreadFooter 
                         likePost={this.likePost}

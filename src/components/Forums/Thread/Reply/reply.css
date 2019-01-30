@@ -1,6 +1,85 @@
 .reply {
     width: 100%;
-    min-height: 30vh;
+    height: 40vh;
 
-    border: 1px solid red;
+    background: #2D2D2D;
+    border-radius: 4px;
+
+    color: #AAAAAA;
+
+    /* border: 1px solid red; */
+
+    margin-bottom: 2%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-around; */
+}
+
+.reply-title {
+    width: 98%;
+    height: 12%;
+
+    border-bottom: 1px solid #494848;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+}
+
+.reply-editor {
+    margin-right: 1%;
+    margin-top: 1%;
+    width: 95%;
+    height: 60%;
+}
+
+.reply-editor > .DraftEditor-root {
+    color: white;
+    background: #555454;
+    border: none;
+    border-radius: 4px;
+    padding: 8px;
+
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 100%;
+    min-height: 100%;
+
+    /* Makes the scrollbar only show when there is overflow */
+    overflow-y: auto;
+}
+
+.reply-footer {
+    border-top: 1px solid #494848;
+
+    margin-top: 2%;
+
+    width: 98%;
+    height: 12%;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.reply-footer > button {
+    margin-top: .3%;
+    border: none;
+    background: #4d90fe;
+    border-radius: 4px;
+    color: white;
+    width: 7em;
+    height: 2em;
+
+    /* margin-right: 2%; */
+    margin-left: 2%;
+}
+
+.reply-footer > button:hover {
+    cursor: pointer;
+    background: #357ae8;
 }

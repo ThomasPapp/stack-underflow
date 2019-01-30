@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { EditorState, RichUtils, convertFromRaw, convertToRaw } from 'draft-js';
+import { EditorState, RichUtils, convertFromRaw, convertToRaw, ContentState } from 'draft-js';
 
 /**
  * A higher-order component used to wrap a rich Draft.js editor to a component.
@@ -11,7 +11,7 @@ import { EditorState, RichUtils, convertFromRaw, convertToRaw } from 'draft-js';
 const RichEditorConnector = (readOnly = false) => WrappedEditor => (
     class Connector extends Component {
         state = {
-            editorState: this.props.editorState || EditorState.createEmpty()
+            editorState: EditorState.createEmpty()
         }
 
         updateEditorState = editorState => this.setState({ editorState });
@@ -42,6 +42,14 @@ const RichEditorConnector = (readOnly = false) => WrappedEditor => (
             return EditorState.createWithContent(content);
         }
 
+        /**
+         * Clears the editor state, thus clearing the editor of any content
+         */
+        clear = () => {
+            const editorState = EditorState.push(this.state.editorState, ContentState.createFromText(''));
+            this.setState({ editorState });
+        }
+
         handleKeyCommand = command => {
             const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
             if (newState) {
@@ -60,7 +68,12 @@ const RichEditorConnector = (readOnly = false) => WrappedEditor => (
             // if the editor is readonly we only send the editor with the 2 needed props:
             // the EditorState (the content), the getEditorState method, and the readonly flag
             if (readOnly) {
-                return <WrappedEditor editorState={this.state.editorState} getEditorState={this.getEditorState} readOnly />
+                return <WrappedEditor 
+                    editorState={this.state.editorState} 
+                    getEditorState={this.getEditorState} 
+                    readOnly
+                    {...this.props}
+                />
             }
 
             // the editor is not in readonly mode, so we send the full editor with all of the props
@@ -72,6 +85,7 @@ const RichEditorConnector = (readOnly = false) => WrappedEditor => (
                     isEmpty={this.isEmpty}
                     getRawContent={this.getRawContent}
                     handleKeyCommand={this.handleKeyCommand}
+                    clear={this.clear}
                     {...this.props}
                 />
             );
