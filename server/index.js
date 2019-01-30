@@ -4,7 +4,7 @@ const session = require('express-session');
 const { json } = require('body-parser');
 const massive = require('massive');
 const app = express();
-const path = require('path'); // Usually moved to the start of file
+// const path = require('path'); // Usually moved to the start of file
 
 const PORT = process.env.SERVER_PORT || 3001;
 
@@ -32,9 +32,9 @@ app.use(session({
 }));
 
 
-app.get('*', (req, res)=>{
-    res.sendFile(path.join(__dirname, '../build/index.html'));
-});
+// app.get('*', (req, res)=>{
+//     res.sendFile(path.join(__dirname, '../build/index.html'));
+// });
 
 // connect to database
 massive(process.env.CONNECTION_STRING)
