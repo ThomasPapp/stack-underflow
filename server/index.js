@@ -17,6 +17,8 @@ const forumController = require('./controllers/fourm/fourmController');
 // mail controller
 const mailController = require('./controllers/auth/emailController');
 
+app.use( express.static( `${__dirname}/../build` ) );
+
 app.use(json());
 
 // init session
