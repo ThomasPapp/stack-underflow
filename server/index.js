@@ -4,6 +4,7 @@ const session = require('express-session');
 const { json } = require('body-parser');
 const massive = require('massive');
 const app = express();
+const path = require('path'); // Usually moved to the start of file
 
 const PORT = process.env.SERVER_PORT || 3001;
 
@@ -19,6 +20,8 @@ const mailController = require('./controllers/auth/emailController');
 
 app.use( express.static( `${__dirname}/../build` ) );
 
+
+
 app.use(json());
 
 // init session
@@ -27,6 +30,11 @@ app.use(session({
     resave: true,
     saveUninitialized: false
 }));
+
+
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 
 // connect to database
 massive(process.env.CONNECTION_STRING)
