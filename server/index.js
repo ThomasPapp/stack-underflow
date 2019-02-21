@@ -43,7 +43,6 @@ massive(process.env.CONNECTION_STRING)
 .catch(err => console.log('Failed to connect to database...', err));
 
 // path
-app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../build/index.html")));
 
 // auth end points
 app.post('/auth/register', auth.isLoggedOut, authController.register);
@@ -62,6 +61,8 @@ app.post('/api/forum/threads', auth.isLoggedIn, forumController.postThread);
 app.get('/api/forum/thread/:id', forumController.getThread);
 app.delete('/api/forum/thread/:id', auth.isLoggedIn, forumController.deleteThread);
 app.post('/api/forum/thread/reply', auth.isLoggedIn, forumController.postReply);
+
+app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../build/index.html")));
 
 // open the connecton
 app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
