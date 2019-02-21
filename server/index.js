@@ -4,7 +4,7 @@ const session = require('express-session');
 const { json } = require('body-parser');
 const massive = require('massive');
 const app = express();
-// const path = require('path'); // Usually moved to the start of file
+const path = require('path');
 
 const PORT = process.env.SERVER_PORT || 3001;
 
@@ -19,8 +19,6 @@ const forumController = require('./controllers/fourm/fourmController');
 const mailController = require('./controllers/auth/emailController');
 
 app.use( express.static( `${__dirname}/../build` ) );
-
-
 
 app.use(json());
 
@@ -43,6 +41,9 @@ massive(process.env.CONNECTION_STRING)
     console.log('Database connected');
 })
 .catch(err => console.log('Failed to connect to database...', err));
+
+// path
+app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../build/index.html")));
 
 // auth end points
 app.post('/auth/register', auth.isLoggedOut, authController.register);
