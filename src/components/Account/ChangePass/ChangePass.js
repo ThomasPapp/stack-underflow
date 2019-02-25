@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { getUser } from '../../../ducks/userReducer';
 
 import './change-pass.css';
 
 class ChangePass extends Component {
-
     state = {
         current: '',
         newPass: '',
         errorMessage: ''
+    }
+
+    componentDidMount() {
+        this.props.getUser();
     }
 
     // onChange handling
@@ -30,8 +34,6 @@ class ChangePass extends Component {
         if (!this.props.user.username) {
             return <Redirect to="/" />
         }
-
-        console.log("redner");
         return (
             <div className="change-pass">
                     <h2>Change Your Password</h2>
@@ -49,4 +51,4 @@ class ChangePass extends Component {
 
 const mapStateToProps = state => state.userReducer;
 
-export default connect(mapStateToProps) (ChangePass);
+export default connect(mapStateToProps, { getUser }) (ChangePass);

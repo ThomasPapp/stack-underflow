@@ -6,6 +6,7 @@ import { logout, getUser } from '../../ducks/userReducer';
 
 import Modal from '../Modal/Modal';
 import Login from '../Login/Login';
+import AccountBubble from '../Account/AccountBubble';
 
 import './nav.css';
 
@@ -24,7 +25,8 @@ class Nav extends Component {
                 <div className="nav-links">
                     {
                         !this.props.user.username ? <button onClick={ this.toggleDisplay }>Login</button>
-                        : <button onClick={this.props.logout}>Logout</button>
+                        :  <AccountBubble logout={this.props.logout} />
+                        // : <button onClick={this.props.logout}>Logout</button>
                     }
                 </div>
 

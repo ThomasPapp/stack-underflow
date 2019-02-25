@@ -1,0 +1,64 @@
+.avatar {
+    width: 3vw;
+    height: 6vh;
+    border-radius: 50%;
+
+    margin-right: 4%;
+}
+
+.avatar:hover {
+    cursor: pointer;
+}
+
+.account-menu, .account-menu-closed {
+    height: 30vh;
+    width: 10vw;
+    position: absolute;
+    z-index: 1;
+
+    top: 8%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #F7F7F7;
+    border-radius: 4px;
+}
+
+.account-menu-closed {
+    display: none;
+}
+
+.account-links {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    font-size: .8em;
+
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+}
+
+.account-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 15%;
+}
+
+.account-link:hover {
+    background: #e7e3e3;
+    cursor: pointer;
+}
+
+.account-link > a {
+    color: black;
+    text-decoration: none;
+}
