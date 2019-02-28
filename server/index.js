@@ -61,6 +61,7 @@ app.post('/api/forum/threads', auth.isLoggedIn, forumController.postThread);
 app.get('/api/forum/thread/:id', forumController.getThread);
 app.delete('/api/forum/thread/:id', auth.isLoggedIn, forumController.deleteThread);
 app.post('/api/forum/thread/reply', auth.isLoggedIn, forumController.postReply);
+app.put('/api/forum/thread/rep', auth.isLoggedIn, forumController.repAuthor);
 
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../build/index.html")));
 

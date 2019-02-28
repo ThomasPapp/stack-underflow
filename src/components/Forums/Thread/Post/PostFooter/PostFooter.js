@@ -5,14 +5,14 @@ import './post-footer.css';
 
 const PostFooter = props => {
     const isAuthor = props.user.user_id === +props.author;
-    console.log("props2:", props);
+    // console.log("props2:", props);
     return (
         <div className="post-footer-container">
-            <button>Rep Author</button>
+            <button onClick={() => props.repAuthor(+props.author)}>Rep Author</button>
     
-            { isAuthor && <button>Edit</button> }
+            {/* { isAuthor && <button>Edit</button> }
 
-            { isAuthor && <button onClick={ props.deleteThread }>Delete</button> }
+            { isAuthor && <button onClick={ props.deleteThread }>Delete</button> } */}
     
             <span id="thumb-down" className="fa fa-thumbs-down thumbs-unselected" />
             <span className="fa fa-thumbs-up thumbs-unselected" />

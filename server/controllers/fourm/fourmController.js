@@ -97,11 +97,40 @@ async function postReply(req, res) {
     }
 }
 
+async function repAuthor(req, res) {
+    const db = req.app.get('db');
+    const { id } = req.body;
+    try {
+        const results = await db.get_rep([ id ]);
+        if (!results[0]) {
+            return res.sendStatus(500);
+        }
+
+        // the rep of the author
+        const authorRep = results[0].reputation;
+
+        // the users rep
+        const userRep = 20;//req.session.user.reputation;
+
+        // the authors new rep
+        const newRep = authorRep + Math.max(1, userRep / 10);
+
+        const repResults = await db.add_rep([ newRep, id ]);
+
+        console.log("rep", repResults);
+
+        res.status(200).json(repResults[0]);
+    } catch (e) {
+        console.log("Error while repping author", e);
+    }
+}
+
 module.exports = {
     getCategorys,
     getThreads,
     postThread,
     getThread,
     deleteThread,
-    postReply
+    postReply,
+    repAuthor
 }

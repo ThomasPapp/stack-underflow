@@ -12,7 +12,7 @@ import PostFooter from './PostFooter/PostFooter';
 const Post = props => {
     const { username, avatar, rep, title, date, content, author } = props;
 
-    console.log("props:", props);
+    // console.log("props:", props);
 
     const editorState = props.getEditorState(content);
     return (
@@ -37,6 +37,7 @@ const Post = props => {
                     author={author}
                     deleteThread={props.deleteThread}
                     deletePost={props.deletePost}
+                    repAuthor={props.repAuthor}
                 />
             </div>
 

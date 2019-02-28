@@ -50,10 +50,49 @@ class Thread extends Component {
         this.setState({ thread })
     }
 
+    repAuthor = author => {
+        // console.log("author:", author, "user:", this.props.user.user_id);
+
+        if (this.props.user.user_id === author) {
+            alert("You cannot rep yourself!");
+            return;
+        }
+
+        axios.put("/api/forum/thread/rep", { id: author })
+        .then(res => {
+            const { user_id, reputation } = res.data;
+
+            let thread = { ...this.state.thread };
+            let replies = [];
+
+            // check replies if there are any
+            if (thread.replies[0]) {
+                thread.replies = replies = this.state.thread.replies.map(reply => {
+                    if (reply.post_author !== user_id) {
+                        return { ...reply };
+                    }
+
+                    return { ...reply, reputation };
+                });
+            }
+
+            // check the main post
+            if (+thread.author === user_id) {
+                thread.reputation = reputation;
+            }
+
+            this.setState({ thread });
+        })
+        .catch(err => console.log("error while repping user", err));
+    }
+
     render() {
         if (this.state.loading) {
             return <Loading center={true} />
         }
+
+        console.log("info", this.state.thread);
+        // console.log("replies:", this.state.thread.replies);
 
         // generate the replies
         const replies = this.state.thread.replies.map(reply => 
@@ -61,11 +100,12 @@ class Thread extends Component {
             key={reply.post_id}
             username={reply.username}
             avatar={reply.avatar}
-            rep={reply.rep}
+            rep={reply.reputation}
             date={reply.date}
             content={reply.content}
             author={reply.post_author}
             deletePost={this.deletePost}
+            repAuthor={this.repAuthor}
         />);
 
         return (
@@ -81,6 +121,7 @@ class Thread extends Component {
                     content={this.state.thread.content}
                     author={this.state.thread.author}
                     deleteThread={this.deleteThread}
+                    repAuthor={this.repAuthor}
                 />
 
                 {/* The thread replies */}
